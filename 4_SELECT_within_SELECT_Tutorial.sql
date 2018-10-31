@@ -91,4 +91,27 @@ SELECT continent, name, area
         WHERE y.continent=x.continent
           )
           
+ -- # 9. Найдите континенты, где все страны имеют население <= 25000000. 
+ -- # Затем найдите названия стран, связанных с этими континентами. Показывать имя, континент и население.
+ SELECT name, continent, population
+  FROM world x
+  WHERE 25000000 > ALL
+  (
+  SELECT population 
+  FROM world y
+  WHERE x.continent = y.continent
+  AND y.population > 0
+  )
+  
+  -- # 10. В некоторых странах население более чем в три раза превышает население любого из их соседей 
+   -- #   (на том же континенте). Выведете такие  страны в континенте.
+   
+  SELECT name, continent
+  FROM world AS x
+  WHERE population/3 > ALL (
+  SELECT population
+  FROM world AS y
+  WHERE x.continent = y.continent
+  AND x.name != y.name);
+          
 
